@@ -1,4 +1,5 @@
 using CityInfo.API;
+using CityInfo.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,13 @@ builder.Services.AddOpenApi();
 //Later Written
 builder.Services.AddSingleton<CitiesDataStore>();
 builder.Services.AddSwaggerGen();
+
+//c# preprocessor directive
+#if DEBUG
+builder.Services.AddTransient<IMailService, LocalMailService>();
+#else 
+builder.Services.AddTransient<IMailService,CloudMailService>();
+#endif
 
 var app = builder.Build();
 
