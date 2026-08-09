@@ -1,5 +1,6 @@
 using CityInfo.API;
 using CityInfo.API.Services;
+using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 
 
@@ -21,6 +22,7 @@ builder.Services.AddOpenApi();
 //Custom Services
 builder.Services.AddSingleton<CitiesDataStore>();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
 //c# preprocessor directive
 #if DEBUG
