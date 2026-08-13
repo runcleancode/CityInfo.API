@@ -61,6 +61,13 @@ namespace CityInfo.API.DbContexts
                     },
                     new PointOfInterest
                     {
+                        Id = 4,
+                        Name = "Antwerp Central Station",
+                        CityId = 2,
+                        Description = "The the finest example of railway architecture in Belgium"
+                    },
+                    new PointOfInterest
+                    {
                         Id = 5,
                         Name = "Eiffel Tower",
                         CityId = 3,
