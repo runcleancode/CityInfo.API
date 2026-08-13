@@ -1,10 +1,11 @@
-
 using System.ComponentModel.DataAnnotations;
 
 namespace CityInfo.API.Entities
 {
     public class City
     {
+
+
         public int Id { get; set; }
 
         [Required]
