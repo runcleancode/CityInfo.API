@@ -1,4 +1,3 @@
-
 using CityInfo.API.Entities;
 using Microsoft.EntityFrameworkCore;
 

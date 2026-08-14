@@ -35,6 +35,10 @@ builder.Services.AddTransient<IMailService,CloudMailService>();
 
 builder.Services.AddDbContext<CityInfoContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("CityInfoDBConnectionString")));
 
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
