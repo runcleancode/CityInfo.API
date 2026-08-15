@@ -1,4 +1,3 @@
-
 using CityInfo.API.DbContexts;
 using CityInfo.API.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +35,35 @@ namespace CityInfo.API.Services
         public async Task<IEnumerable<City>> GetCitiesAsync()
         {
             return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
+        }
+
+        public async Task<(IEnumerable<City>, PaginationMetadata)> GetCitiesAsync(string? name, string? searchQuery, int pageNumber, int pageSize)
+        {
+            var collection = _context.Cities as IQueryable<City>;
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                name = name.Trim();
+                collection = collection.Where(c => c.Name == name);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim();
+                collection = collection.Where(a => a.Name.Contains(searchQuery) ||
+                    (a.Description != null && a.Description.Contains(searchQuery)));
+            }
+
+            var totalItemCount = await collection.CountAsync();
+
+            var paginationMetaData = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+            var collectionToReturn = await collection.OrderBy(c => c.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (collectionToReturn, paginationMetaData);
         }
 
         public async Task<City?> GetCityAsync(
