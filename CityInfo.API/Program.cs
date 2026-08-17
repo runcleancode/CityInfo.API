@@ -5,6 +5,7 @@ using CityInfo.API.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using Serilog;
 
 
@@ -25,7 +26,22 @@ builder.Services.AddOpenApi();
 
 //Custom Services
 builder.Services.AddSingleton<CitiesDataStore>();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(setupAction =>
+{
+    setupAction.AddSecurityDefinition("CityInfoApiBearerAuth", new OpenApiSecurityScheme()
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        Description = "Input a valid token to access this API"
+    });
+
+    setupAction.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("CityInfoApiBearerAuth", document)] = new List<string>()
+    });
+});
+
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
 //c# preprocessor directive
