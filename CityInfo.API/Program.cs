@@ -20,7 +20,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers(options =>
+{
+    options.ReturnHttpNotAcceptable = true;
+}).AddNewtonsoftJson()
+// .AddXmlDataContractSerializerFormatters();
+.AddXmlSerializerFormatters();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
