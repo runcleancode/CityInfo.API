@@ -12,6 +12,7 @@ namespace CityInfo.API.Controllers
     [Route("api/cities/{cityId}/pointsofinterest")]
     public class PointsOfInterestController : ControllerBase
     {
+        private readonly ILogger<PointsOfInterestController> _logger;
         private readonly ICityInfoRepository _cityInfoRepository;
         private readonly IMapper _mapper;
         private readonly IMailService _mailService;
@@ -19,7 +20,8 @@ namespace CityInfo.API.Controllers
         public PointsOfInterestController(
             ICityInfoRepository cityInfoRepository,
             IMapper mapper,
-            IMailService mailService)
+            IMailService mailService,
+            ILogger<PointsOfInterestController> logger)
         {
             _cityInfoRepository = cityInfoRepository ??
                 throw new ArgumentNullException(nameof(cityInfoRepository));
@@ -27,6 +29,8 @@ namespace CityInfo.API.Controllers
                 throw new ArgumentNullException(nameof(mapper));
             _mailService = mailService ??
                 throw new ArgumentNullException(nameof(mailService));
+            _logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -34,6 +38,9 @@ namespace CityInfo.API.Controllers
         {
             if (!await _cityInfoRepository.CityExistsAsync(cityId))
             {
+                _logger.LogInformation(
+                    $"City with id {cityId} wasn't found when accessing points of interest.");
+
                 return NotFound();
             }
 
