@@ -2,6 +2,7 @@ using System.Text;
 using CityInfo.API;
 using CityInfo.API.DbContexts;
 using CityInfo.API.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +24,7 @@ builder.Host.UseSerilog();
 builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true;
+    options.Filters.Add(new ProducesAttribute("application/json", "application/xml"));
 }).AddNewtonsoftJson()
 // .AddXmlDataContractSerializerFormatters();
 .AddXmlSerializerFormatters();
