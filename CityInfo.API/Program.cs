@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using CityInfo.API;
 using CityInfo.API.DbContexts;
@@ -37,6 +38,12 @@ builder.Services.AddSingleton<CitiesDataStore>();
 
 builder.Services.AddSwaggerGen(setupAction =>
 {
+
+    var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+
+    setupAction.IncludeXmlComments(xmlCommentsFullPath);
+
     setupAction.AddSecurityDefinition("CityInfoApiBearerAuth", new OpenApiSecurityScheme()
     {
         Type = SecuritySchemeType.Http,
@@ -87,6 +94,13 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("city", "Antwerp");
     });
+});
+
+builder.Services.AddApiVersioning(setupAction =>
+{
+    setupAction.AssumeDefaultVersionWhenUnspecified = true;
+    setupAction.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    setupAction.ReportApiVersions = true;
 });
 
 var app = builder.Build();
