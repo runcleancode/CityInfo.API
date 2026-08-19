@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="CityInfo.Entities/CityInfo.Entities.csproj" />
+  <Project Path="CityInfo.Presentation/CityInfo.Presentation.csproj" />
+  <Project Path="CityInfo.Repositories/CityInfo.Repositories.csproj" />
+  <Project Path="CityInfo.Services/CityInfo.Services.csproj" />
+  <Project Path="CityInfo.WebApi/CityInfo.WebApi.csproj" />
+</Solution>

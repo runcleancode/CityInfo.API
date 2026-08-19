@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CityInfo.Entities\CityInfo.Entities.csproj" />
+    <ProjectReference Include="..\CityInfo.Repositories\CityInfo.Repositories.csproj" />
+    <ProjectReference Include="..\CityInfo.Services\CityInfo.Services.csproj" />
+    <ProjectReference Include="..\CityInfo.Presentation\CityInfo.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>
