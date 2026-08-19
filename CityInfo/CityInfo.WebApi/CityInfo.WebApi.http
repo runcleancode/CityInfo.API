@@ -1,0 +1,6 @@
+@CityInfo.WebApi_HostAddress = http://localhost:5092
+
+GET {{CityInfo.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
