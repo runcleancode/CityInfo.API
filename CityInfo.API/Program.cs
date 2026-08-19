@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Text;
-using CityInfo.API;
 using CityInfo.API.DbContexts;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -34,10 +33,15 @@ builder.Services.AddControllers(options =>
 builder.Services.AddOpenApi();
 
 //Custom Services
-builder.Services.AddSingleton<CitiesDataStore>();
+// builder.Services.AddSingleton<CitiesDataStore>();
 
 builder.Services.AddSwaggerGen(setupAction =>
 {
+    setupAction.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "CityInfo API",
+        Version = "v1"
+    });
 
     var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
@@ -99,8 +103,12 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddApiVersioning(setupAction =>
 {
     setupAction.AssumeDefaultVersionWhenUnspecified = true;
-    setupAction.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    setupAction.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
     setupAction.ReportApiVersions = true;
+}).AddApiExplorer(setupAction =>
+{
+    setupAction.GroupNameFormat = "'v'VVV";
+    setupAction.SubstituteApiVersionInUrl = true; // Rota şablonundaki {version} yerine v1 yazar
 });
 
 var app = builder.Build();
@@ -114,6 +122,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthentication();
 
