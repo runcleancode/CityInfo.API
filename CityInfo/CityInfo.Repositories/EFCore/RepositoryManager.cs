@@ -3,11 +3,11 @@ using CityInfo.Repositories.Contracts;
 
 namespace CityInfo.Repositories.EFCore;
 
-public class RepositoryManager : IRepositoryManager
+public sealed class RepositoryManager : IRepositoryManager
 {
     private readonly RepositoryContext _context;
     private ICityRepository? _cityRepository;
-    private IPointOfInterestRepository _pointOfInterestRepository;
+    private IPointOfInterestRepository? _pointOfInterestRepository;
 
     public RepositoryManager(RepositoryContext context) => _context = context;
 

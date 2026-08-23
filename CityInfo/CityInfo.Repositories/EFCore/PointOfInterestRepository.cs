@@ -1,11 +1,12 @@
 using CityInfo.Entities.Models;
 using CityInfo.Entities.RequestFeatures;
 using CityInfo.Repositories.Contracts;
+using CityInfo.Repositories.EFCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityInfo.Repositories.EFCore;
 
-public class PointOfInterestRepository : RepositoryBase<PointOfInterest>, IPointOfInterestRepository
+public sealed class PointOfInterestRepository : RepositoryBase<PointOfInterest>, IPointOfInterestRepository
 {
     public PointOfInterestRepository(RepositoryContext context) : base(context) { }
 
@@ -24,12 +25,12 @@ public class PointOfInterestRepository : RepositoryBase<PointOfInterest>, IPoint
 
     public async Task<PagedList<PointOfInterest>> GetPointsOfInterestAsync(int cityId, PointOfInterestParameters pointOfInterestParameters, bool trackChanges)
     {
-        var points = FindByCondition(p => p.CityId == cityId, trackChanges);
+        var points = FindByCondition(p => p.CityId == cityId, trackChanges)
+            .Search(pointOfInterestParameters.SearchQuery);
 
-        if (!string.IsNullOrWhiteSpace(pointOfInterestParameters.SearchQuery))
-            points = points.Where(p => p.Name.Contains(pointOfInterestParameters.SearchQuery));
-
-        return await PagedList<PointOfInterest>.ToPagedListAsync(points, pointOfInterestParameters.PageNumber, pointOfInterestParameters.PageSize);
+        return await points.ToPagedListAsync(pointOfInterestParameters.PageNumber, pointOfInterestParameters.PageSize);
 
     }
+
+    public void UpdatePointOfInterest(PointOfInterest pointOfInterest) => Update(pointOfInterest);
 }
