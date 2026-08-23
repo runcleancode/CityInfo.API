@@ -1,0 +1,31 @@
+services:
+  postgres-db:
+    image: postgres:18-alpine
+    container_name: cityinfo_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Password123!
+      POSTGRES_DB: cityinfo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: cityinfo_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: Admin123!
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres-db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  pgadmin_data:
