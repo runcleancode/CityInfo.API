@@ -9,4 +9,5 @@ public interface IPointOfInterestRepository : IRepositoryBase<PointOfInterest>
     Task<PointOfInterest?> GetPointOfInterestAsync(int cityId, int pointOfInterestId, bool trackChanges);
     void CreatePointOfInterest(int cityId, PointOfInterest pointOfInterest);
     void DeletePointOfInterest(PointOfInterest pointOfInterest);
+    void UpdatePointOfInterest(PointOfInterest pointOfInterest);
 }
