@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="../CityInfo.Repositories/CityInfo.Repositories.csproj" />
     <ProjectReference Include="..\CityInfo.Entities\CityInfo.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
   </ItemGroup>
 
   <PropertyGroup>
