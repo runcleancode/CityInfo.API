@@ -53,7 +53,7 @@ namespace CityInfo.API.Controllers
             //Step 1: validate the username/password
             var user = ValidateUserCredentials(authenticationRequestBody.UserName, authenticationRequestBody.Password);
 
-            if (user == null)
+            if (user is null)
                 return Unauthorized();
 
             //Step 2: create a token

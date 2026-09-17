@@ -37,7 +37,7 @@ namespace CityInfo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PointOfInterestDto>>> GetPointsOfInterest(int cityId)
         {
-            var cityName = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
+            var cityName = HttpContext.User.Claims.FirstOrDefault(c => c.Type.Equals("city"))?.Value;
 
             if (!await _cityInfoRepository.CityNameMatchesCityIdAsync(cityName, cityId))
                 return Forbid();
@@ -69,7 +69,7 @@ namespace CityInfo.API.Controllers
             var pointOfInterest = await _cityInfoRepository
                 .GetPointOfInterestForCityAsync(cityId, pointOfInterestId);
 
-            if (pointOfInterest == null)
+            if (pointOfInterest is null)
                 return NotFound();
 
             return Ok(_mapper.Map<PointOfInterestDto>(pointOfInterest));
@@ -112,7 +112,7 @@ namespace CityInfo.API.Controllers
             var pointOfInterestEntity = await _cityInfoRepository
                 .GetPointOfInterestForCityAsync(cityId, pointOfInterestedId);
 
-            if (pointOfInterestEntity == null)
+            if (pointOfInterestEntity is null)
             {
                 return NotFound();
             }
@@ -134,7 +134,7 @@ namespace CityInfo.API.Controllers
 
             var pointOfInterestEntity = await _cityInfoRepository.
                 GetPointOfInterestForCityAsync(cityId, pointOfInterestId);
-            if (pointOfInterestEntity == null)
+            if (pointOfInterestEntity is null)
                 return NotFound();
 
             _mapper.Map(pointOfInterest, pointOfInterestEntity);
@@ -153,7 +153,7 @@ namespace CityInfo.API.Controllers
 
             var pointOfInterestEntity = await _cityInfoRepository.
               GetPointOfInterestForCityAsync(cityId, pointOfInterestId);
-            if (pointOfInterestEntity == null)
+            if (pointOfInterestEntity is null)
                 return NotFound();
 
             var pointOfInterestToPatch = _mapper.Map<PointOfInterestForUpdateDto>(pointOfInterestEntity);

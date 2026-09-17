@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CityInfoNew.Contracts/CityInfoNew.Contracts.csproj" />
+    <Project Path="src/CityInfoNew.Entities/CityInfoNew.Entities.csproj" />
+    <Project Path="src/CityInfoNew.Presentation/CityInfoNew.Presentation.csproj" />
+    <Project Path="src/CityInfoNew.Repositories/CityInfoNew.Repositories.csproj" />
+    <Project Path="src/CityInfoNew.Services/CityInfoNew.Services.csproj" />
+    <Project Path="src/CityInfoNew.WebApi/CityInfoNew.WebApi.csproj" />
+  </Folder>
+</Solution>
