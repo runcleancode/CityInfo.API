@@ -1,4 +1,4 @@
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Entities.Models;
 using CityInfoNew.Entities.RequestFeatures;
 using CityInfoNew.Repositories.Extensions;

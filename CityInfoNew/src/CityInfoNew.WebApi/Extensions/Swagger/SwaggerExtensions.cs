@@ -1,7 +1,7 @@
 using Asp.Versioning.ApiExplorer;
 using Microsoft.OpenApi;
 
-namespace CityInfoNew.WebApi.Extensions;
+namespace CityInfoNew.WebApi.Extensions.Swagger;
 
 public static class SwaggerExtensions
 {

@@ -1,7 +1,7 @@
 using CityInfoNew.Entities.Models;
 using CityInfoNew.Entities.RequestFeatures;
 
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface ICityRepository : IRepositoryBase<City>
 {

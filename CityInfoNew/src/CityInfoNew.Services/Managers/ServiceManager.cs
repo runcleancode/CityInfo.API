@@ -1,7 +1,4 @@
-using AutoMapper;
-using CityInfoNew.Contracts.Contracts;
-using CityInfoNew.Entities.ConfigurationModels;
-using Microsoft.Extensions.Options;
+using CityInfoNew.Contracts.Abstractions;
 
 namespace CityInfoNew.Services.Managers;
 

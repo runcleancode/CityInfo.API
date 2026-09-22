@@ -1,4 +1,4 @@
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Entities.ConfigurationModels;
 using CityInfoNew.Services.Mail;
 using CityInfoNew.Services.Managers;

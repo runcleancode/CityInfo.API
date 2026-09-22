@@ -71,11 +71,15 @@ public static class DatabaseSeeder
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new InvalidOperationException($"SECURITY ERROR: admin user could not be created because the password policy failed!\n" +
-            $"Details: {errors}\n" +
-            $"Please update your User Secrets password with a stronger one by running:\n" +
-            $"dotnet user-secrets set \"AdminSettings:Password\" \"<your_secure_password>\"\n" +
-            $"dotnet user-secrets list");
+            throw new InvalidOperationException(
+                $"SECURITY ERROR: Admin user could not be created because the password policy failed!\n" +
+                $"Details: {errors}\n\n" +
+                $"--- IMPORTANT INFO ---\n" +
+                $"Default credentials (Username: 'admin', Password: 'admin') are intentionally REJECTED for application security. You MUST create your own secure password.\n" +
+                $"----------------------\n\n" +
+                $"Please update your User Secrets password with a stronger one by running:\n" +
+                $"1. dotnet user-secrets set \"AdminSettings:Password\" \"your_secure_password\"\n" +
+                $"2. dotnet user-secrets list");
         }
     }
 }

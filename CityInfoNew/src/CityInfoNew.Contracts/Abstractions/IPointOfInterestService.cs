@@ -1,7 +1,7 @@
 using CityInfoNew.Contracts.DTOs;
 using CityInfoNew.Entities.Models;
 
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IPointOfInterestService
 {

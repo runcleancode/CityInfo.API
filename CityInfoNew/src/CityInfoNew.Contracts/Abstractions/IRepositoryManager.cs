@@ -1,4 +1,4 @@
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IRepositoryManager
 {

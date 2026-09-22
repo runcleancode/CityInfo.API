@@ -1,6 +1,7 @@
 using CityInfoNew.Repositories.Extensions;
 using CityInfoNew.Services.Extensions;
 using CityInfoNew.WebApi.Extensions;
+using CityInfoNew.WebApi.Extensions.Swagger;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

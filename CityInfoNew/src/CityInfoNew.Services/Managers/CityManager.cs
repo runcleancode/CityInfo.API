@@ -1,5 +1,5 @@
 using AutoMapper;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Contracts.DTOs;
 using CityInfoNew.Entities.RequestFeatures;
 
