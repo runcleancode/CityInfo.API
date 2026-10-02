@@ -7,7 +7,7 @@ public interface IPointOfInterestService
 {
     Task<IEnumerable<PointOfInterestDto?>> GetAllPointsOfInterestAsync(
         bool trackChanges);
-    Task<PointOfInterestDto?> GetOnePointOfInterestByIdAsync(
+    Task<PointOfInterestDto> GetOnePointOfInterestByIdAsync(
         int pointOfInterestId,
         bool trackChanges);
     Task<PointOfInterestDto> CreateOnePointOfInterest(
@@ -24,12 +24,14 @@ public interface IPointOfInterestService
         PointOfInterestForUpdateDto pointOfInterestForUpdateDto,
         bool trackChanges);
 
-    Task<(PointOfInterestForUpdateDto pointOfInterestToPatch, PointOfInterest pointOfInterestEntity)> GetPointOfInterestForPatchAsync(
+    Task<PointOfInterestForUpdateDto> GetPointOfInterestForPatchAsync(
         int cityId,
         int pointOfInterestId,
         bool trackChanges);
 
     Task SaveChangesForPatch(
+        int cityId,
+        int pointOfInterestId,
         PointOfInterestForUpdateDto pointOfInterestToPatch,
-        PointOfInterest pointOfInterestEntity);
+        bool trackChanges);
 }

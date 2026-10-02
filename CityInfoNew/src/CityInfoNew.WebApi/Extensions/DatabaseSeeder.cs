@@ -12,8 +12,12 @@ public static class DatabaseSeeder
         using var scope = app.Services.CreateScope();
         var serviceProvider = scope.ServiceProvider;
 
+        var logger = serviceProvider.GetRequiredService<ILogger<WebApplication>>();
+
         var dbContext = serviceProvider.GetRequiredService<RepositoryContext>();
         await dbContext.Database.MigrateAsync();
+
+        logger.LogInformation("Database migration checked/completed successfully.");
 
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
         var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
@@ -50,7 +54,7 @@ public static class DatabaseSeeder
                     throw new InvalidOperationException($"SECURITY ERROR: Admin password could not be updated!\nDetails: {errors}");
                 }
 
-                Console.WriteLine("ADMIN SYNC: Admin password in User Secrets has changed. Database updated successfully!");
+                logger.LogInformation("ADMIN SYNC: Admin password is User Secrets has changed. Database updated successfully!");
             }
 
             return;
@@ -81,5 +85,7 @@ public static class DatabaseSeeder
                 $"1. dotnet user-secrets set \"AdminSettings:Password\" \"your_secure_password\"\n" +
                 $"2. dotnet user-secrets list");
         }
+
+        logger.LogInformation("ADMIN SEED: Admin user created successfully.");
     }
 }

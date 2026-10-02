@@ -1,4 +1,5 @@
 using Serilog;
+using Serilog.Events;
 
 namespace CityInfoNew.WebApi.Extensions;
 
@@ -6,16 +7,18 @@ public static class HostExtensions
 {
     public static IHostBuilder ConfigureLogging(this IHostBuilder host)
     {
-        return host.UseSerilog((context, services, configuration) =>
-        {
-            configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .ReadFrom.Services(services)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File(
-                    "logs/cityinfo.txt",
-                    rollingInterval: RollingInterval.Day);
-        });
+        host.UseSerilog((context, services, configuration) =>
+       {
+           configuration
+               .MinimumLevel.Debug()
+               .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+               .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+               .MinimumLevel.Override("System", LogEventLevel.Warning)
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .WriteTo.Seq("http://localhost:5341");
+       });
+
+        return host;
     }
 }

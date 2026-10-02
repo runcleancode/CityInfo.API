@@ -36,9 +36,6 @@ public class PointsOfInterestController : ControllerBase
     {
         var point = await _manager.PointOfInterestService.GetOnePointOfInterestByIdAsync(id, trackChanges: false);
 
-        if (point is null)
-            return NotFound();
-
         return Ok(point);
     }
 
@@ -95,21 +92,25 @@ public class PointsOfInterestController : ControllerBase
         if (patchDocument is null)
             return BadRequest("patchDocument object is null");
 
-        var (pointOfInterestToPatch, pointOfInterestEntity) = await _manager
+        var pointOfInterestToPatch = await _manager
             .PointOfInterestService
             .GetPointOfInterestForPatchAsync(cityId, pointOfInterestId, trackChanges: true);
 
-        patchDocument.ApplyTo(pointOfInterestToPatch,
-        error => ModelState.AddModelError(
-            error.Operation.path,
-            error.ErrorMessage));
+        patchDocument.ApplyTo(
+            pointOfInterestToPatch,
+            error => ModelState.AddModelError(
+                error.Operation.path,
+                error.ErrorMessage));
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         await _manager.PointOfInterestService
             .SaveChangesForPatch(
-                pointOfInterestToPatch, pointOfInterestEntity);
+                cityId,
+                pointOfInterestId,
+                pointOfInterestToPatch,
+                trackChanges: true);
 
         return NoContent();
     }

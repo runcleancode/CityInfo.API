@@ -2,5 +2,8 @@ namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IMailService
 {
-    void Send(string subject, string message);
+    Task SendAsync(
+        string subject,
+        string message,
+        CancellationToken cancellationToken = default);
 }

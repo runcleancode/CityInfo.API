@@ -9,7 +9,7 @@ public interface ICityService
 
     Task<(IEnumerable<CityWithoutPointsOfInterestDto> cities, MetaData metaData)> GetAllCitiesAsync(CityParameters cityParameters, bool trackChanges);
 
-    Task<CityDto?> GetOneCityByIdAsync(int cityId, bool includePointsOfInterest, bool trackChanges);
+    Task<CityDto> GetOneCityByIdAsync(int cityId, bool includePointsOfInterest, bool trackChanges);
     Task<bool> CityExistsAsync(int cityId);
     Task<bool> CityNameMatchesCityIdAsync(string? cityName, int cityId);
 

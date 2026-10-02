@@ -1,0 +1,11 @@
+@host= http://localhost:5088
+@api = {{host}}/api
+
+###Authenticate with valid credentials
+POST {{api}}/authentication/Authenticate
+Content-Type:application/json
+
+{
+    "userName":"admin",
+    "password":"YOUR_PASSWORD"
+}

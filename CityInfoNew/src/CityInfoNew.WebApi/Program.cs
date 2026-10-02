@@ -3,6 +3,7 @@ using CityInfoNew.Services.Extensions;
 using CityInfoNew.WebApi.Extensions;
 using CityInfoNew.WebApi.Extensions.Swagger;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ await app.SeedDatabaseAsync();
 
 //Global Exception Handler
 app.UseExceptionHandler();
+
+app.UseSerilogRequestLogging();
 
 //Swagger UI Configuration
 app.UseConfiguredSwaggerUi();
