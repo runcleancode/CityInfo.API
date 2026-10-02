@@ -1,5 +1,5 @@
 using System.Text;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Contracts.DTOs;
 using CityInfoNew.Entities.ConfigurationModels;
 using CityInfoNew.Entities.Constants;
@@ -54,10 +54,14 @@ public class AuthenticationManager : IAuthenticationService
             [JwtRegisteredClaimNames.Sub] = user.Id,
             [JwtRegisteredClaimNames.GivenName] = user.FirstName,
             [JwtRegisteredClaimNames.FamilyName] = user.LastName,
-            [ClaimConstants.City] = user.City,
 
             ["SecurityStamp"] = user.SecurityStamp ?? string.Empty
         };
+
+        if (user.CityId.HasValue)
+        {
+            claims[ClaimConstants.City] = user.CityId.Value;
+        }
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -70,6 +74,7 @@ public class AuthenticationManager : IAuthenticationService
         };
 
         var handler = new JsonWebTokenHandler();
+
         return handler.CreateToken(tokenDescriptor);
     }
 }

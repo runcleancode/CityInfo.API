@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Asp.Versioning;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,12 +45,29 @@ public class CitiesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCity(int id, bool includePointsOfInterest = false)
     {
-        var city = await _manager.CityService.GetOneCityByIdAsync(id, includePointsOfInterest, trackChanges: false);
-
-        if (city is null)
-            return NotFound();
+        var city = await _manager.CityService.GetOneCityByIdAsync(
+            id,
+            includePointsOfInterest,
+            trackChanges: false);
 
         return Ok(city);
     }
 
+    //For Testing
+    [HttpGet("test-error")]
+    public IActionResult TestError()
+    {
+        throw new Exception("Test exception for global exception handler.");
+    }
+
+    //For Testing
+    [HttpGet("test-mail")]
+    public async Task<IActionResult> TestMail()
+    {
+        await _manager.MailService.SendAsync(
+            "CityInfo test mail",
+            "This is a test email sent from CityInfoNew.");
+
+        return Ok("Test mail sent.");
+    }
 }

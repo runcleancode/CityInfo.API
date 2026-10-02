@@ -4,6 +4,8 @@ using CityInfoNew.Entities.ConfigurationModels;
 using CityInfoNew.Entities.Constants;
 using CityInfoNew.Entities.Models;
 using CityInfoNew.Repositories.EFCore;
+using CityInfoNew.WebApi.Extensions.Swagger;
+using CityInfoNew.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
@@ -17,6 +19,7 @@ public static class ServiceExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddExceptionHandler<GlobalExceptionHandler>();
         services.ConfigureSwagger();
         services.ConfigureIdentity();
         services.ConfigureVersioning();

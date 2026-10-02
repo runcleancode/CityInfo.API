@@ -1,6 +1,7 @@
 using AutoMapper;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Contracts.DTOs;
+using CityInfoNew.Entities.Exceptions;
 using CityInfoNew.Entities.Models;
 
 namespace CityInfoNew.Services.Managers;
@@ -50,33 +51,15 @@ public class PointOfInterestManager : IPointOfInterestService
         return _mapper.Map<IEnumerable<PointOfInterestDto>>(pointsOfInterest);
     }
 
-    public async Task<PointOfInterestDto?> GetOnePointOfInterestByIdAsync(int pointOfInterestId,
+    public async Task<PointOfInterestDto> GetOnePointOfInterestByIdAsync(int pointOfInterestId,
     bool trackChanges)
     {
         var pointOfInterest = await _manager.PointOfInterest.GetOnePointOfInterestByIdAsync(pointOfInterestId, trackChanges);
 
-        return pointOfInterest is null ? null : _mapper.Map<PointOfInterestDto>(pointOfInterest);
-    }
+        if (pointOfInterest is null)
+            throw new PointOfInterestNotFoundException(pointOfInterestId);
 
-    public async Task<(PointOfInterestForUpdateDto pointOfInterestToPatch, PointOfInterest pointOfInterestEntity)> GetPointOfInterestForPatchAsync(
-        int cityId,
-        int pointOfInterestId,
-        bool trackChanges)
-    {
-        var entity = await GetOnePointOfInterestByIdAndCheckExistsAsync(cityId, pointOfInterestId, trackChanges);
-
-        var dtoPatch = _mapper.Map<PointOfInterestForUpdateDto>(entity);
-
-        return (dtoPatch, entity);
-    }
-
-    public async Task SaveChangesForPatch(
-        PointOfInterestForUpdateDto pointOfInterestToPatch,
-        PointOfInterest pointOfInterestEntity)
-    {
-        _mapper.Map(pointOfInterestToPatch, pointOfInterestEntity);
-
-        await _manager.SaveAsync();
+        return _mapper.Map<PointOfInterestDto>(pointOfInterest);
     }
 
     public async Task UpdateOnePointOfInterestAsync(
@@ -102,7 +85,7 @@ public class PointOfInterestManager : IPointOfInterestService
         var entity = await _manager.PointOfInterest.GetOnePointOfInterestByIdAsync(pointOfInterestId, trackChanges);
 
         if (entity is null || entity.CityId != cityId)
-            throw new InvalidOperationException($"Point of interest with id: {pointOfInterestId} for city id: {cityId} was not found.");
+            throw new PointOfInterestNotFoundException(pointOfInterestId);
 
         return entity;
     }
@@ -112,6 +95,26 @@ public class PointOfInterestManager : IPointOfInterestService
         var cityExists = await _manager.City.CityExistsAsync(cityId);
 
         if (!cityExists)
-            throw new InvalidOperationException($"City with id: {cityId} was not found.");
+            throw new CityNotFoundException(cityId);
+    }
+
+    public async Task<PointOfInterestForUpdateDto> GetPointOfInterestForPatchAsync(
+        int cityId,
+        int pointOfInterestId,
+        bool trackChanges)
+    {
+        var entity = await GetOnePointOfInterestByIdAndCheckExistsAsync(cityId, pointOfInterestId, trackChanges);
+        return _mapper.Map<PointOfInterestForUpdateDto>(entity);
+    }
+
+    public async Task SaveChangesForPatch(
+        int cityId,
+        int pointOfInterestId,
+        PointOfInterestForUpdateDto pointOfInterestToPatch,
+        bool trackChanges)
+    {
+        var entity = await GetOnePointOfInterestByIdAndCheckExistsAsync(cityId, pointOfInterestId, trackChanges);
+        _mapper.Map(pointOfInterestToPatch, entity);
+        await _manager.SaveAsync();
     }
 }

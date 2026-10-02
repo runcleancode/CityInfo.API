@@ -1,5 +1,5 @@
 using Asp.Versioning;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Contracts.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

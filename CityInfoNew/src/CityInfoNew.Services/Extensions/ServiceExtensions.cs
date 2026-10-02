@@ -1,4 +1,4 @@
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Entities.ConfigurationModels;
 using CityInfoNew.Services.Mail;
 using CityInfoNew.Services.Managers;
@@ -58,18 +58,7 @@ public static class ServiceExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        var mailConfig = configuration
-            .GetSection("MailSettings")
-            .Get<MailConfiguration>();
-
-        if (mailConfig is not null && mailConfig.UseCloudMail)
-        {
-            services.AddTransient<IMailService, CloudMailService>();
-        }
-        else
-        {
-            services.AddTransient<IMailService, LocalMailService>();
-        }
+        services.AddTransient<IMailService, SmtpMailService>();
 
         return services;
     }

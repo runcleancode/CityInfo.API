@@ -1,8 +1,9 @@
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IServiceManager
 {
     ICityService CityService { get; }
     IPointOfInterestService PointOfInterestService { get; }
     IAuthenticationService AuthenticationService { get; }
+    IMailService MailService { get; }
 }

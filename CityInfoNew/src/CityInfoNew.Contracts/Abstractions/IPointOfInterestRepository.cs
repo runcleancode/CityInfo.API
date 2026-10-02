@@ -1,6 +1,6 @@
 using CityInfoNew.Entities.Models;
 
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IPointOfInterestRepository : IRepositoryBase<PointOfInterest>
 {

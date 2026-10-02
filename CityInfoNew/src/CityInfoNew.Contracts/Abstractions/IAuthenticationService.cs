@@ -1,6 +1,6 @@
 using CityInfoNew.Contracts.DTOs;
 
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IAuthenticationService
 {

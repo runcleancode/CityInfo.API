@@ -1,4 +1,4 @@
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Repositories.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CityInfoNew.Repositories.Extensions;
 
-public static class RepositoryExtensions
+public static class RepositoryServiceExtensions
 {
     public static IServiceCollection AddRepositoryServices(
         this IServiceCollection services,

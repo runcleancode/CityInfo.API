@@ -1,6 +1,7 @@
 using AutoMapper;
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 using CityInfoNew.Contracts.DTOs;
+using CityInfoNew.Entities.Exceptions;
 using CityInfoNew.Entities.RequestFeatures;
 
 namespace CityInfoNew.Services.Managers;
@@ -36,12 +37,13 @@ public class CityManager : ICityService
         return (cities: citiesDto, metaData: pagedCities.MetaData);
     }
 
-    public async Task<CityDto?> GetOneCityByIdAsync(int cityId, bool includePointsOfInterest, bool trackChanges)
+    public async Task<CityDto> GetOneCityByIdAsync(int cityId, bool includePointsOfInterest, bool trackChanges)
     {
         var city = await _manager.City.GetOneCityByIdAsync(cityId, includePointsOfInterest, trackChanges);
 
-        return city is null ? null : _mapper.Map<CityDto>(city);
+        if (city is null)
+            throw new CityNotFoundException(cityId);
+
+        return _mapper.Map<CityDto>(city);
     }
-
-
 }

@@ -1,4 +1,4 @@
-using CityInfoNew.Contracts.Contracts;
+using CityInfoNew.Contracts.Abstractions;
 
 namespace CityInfoNew.Repositories.EFCore;
 

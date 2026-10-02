@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace CityInfoNew.Contracts.Contracts;
+namespace CityInfoNew.Contracts.Abstractions;
 
 public interface IRepositoryBase<T> where T : class
 {

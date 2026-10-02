@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace CityInfoNew.WebApi.Extensions;
+namespace CityInfoNew.WebApi.Extensions.Swagger;
 
 internal class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
 {
